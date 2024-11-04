@@ -1,0 +1,62 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+input CreateTransactionInput {
+  amount: String!
+  originId: String!
+  destinationCode: String!
+}
+
+input CreateAccountInput {
+  email: String!
+  password: String!
+  name: String!
+}
+
+type LoginReturn {
+  token: String!
+}
+
+type LogoutReturn {
+  loggedOut: Boolean
+}
+
+type CheckUserReturn {
+  userExists: Boolean
+  userId: String
+}
+
+type Query {
+  listUserTransactions(userId: ID!): [Transaction]
+  accounts: String
+  getUserInfoById(userId: ID!): User!
+  checkUserByCode(userCode: String): CheckUserReturn
+}
+
+type Mutation {
+  createUser(params: CreateAccountInput): User
+  loginUser(email: String!, password: String!): LoginReturn
+  createTransaction(params: CreateTransactionInput): Transaction
+  logoutUser(userId: String!): LogoutReturn
+}
+
+type Transaction {
+  id: ID
+  amount: Int!
+  originId: ID!
+  destinationId: ID!
+  createdAt: String!
+  status: String!
+}
+
+type User {
+  id: ID
+  password: String!
+  name: String!
+  code: String!
+  email: String!
+  role: String!
+  balance: Int!
+}
